@@ -1,0 +1,42 @@
+WITH top_country (country) AS 
+(SELECT D.country
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_ID = D.country_ID
+GROUP BY country
+	ORDER BY COUNT(customer_id) DESC
+	LIMIT 10),
+
+top_city(city) AS 
+(SELECT C.city
+FROM customer A
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_ID = D.country_ID
+WHERE D.country IN 
+	(SELECT country FROM top_country)
+GROUP BY city
+ORDER BY COUNT(customer_id) DESC
+LIMIT 10),
+
+top_customer(customer_id) AS
+(SELECT A.customer_id,
+	A.first_name,
+	A.last_name,
+	C.city,
+	D.country,
+	SUM(E.amount) AS total_payment
+FROM payment E
+INNER JOIN customer A ON E.customer_id = A.customer_id
+INNER JOIN address B ON A.address_id = B.address_id
+INNER JOIN city C ON B.city_id = C.city_id
+INNER JOIN country D ON C.country_ID = D.country_ID
+WHERE city IN
+	(SELECT city from top_city)
+GROUP BY A.customer_id, C.city, D.country
+ORDER BY SUM(E.amount) DESC
+LIMIT 5)
+
+SELECT AVG(total_payment)
+FROM top_customer
