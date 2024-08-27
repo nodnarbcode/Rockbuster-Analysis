@@ -1,0 +1,33 @@
+# Duplicate values
+SELECT film_id,
+	title,
+	release_year,
+	language_id,
+	count(*)
+FROM film
+GROUP BY film_id,
+	title,
+	release_year,
+	language_id
+HAVING count(*) > 1; 
+--no result set means we have no duplicates
+
+# Non uniform values
+SELECT DISTINCT release_year,
+	rating,
+	rental_rate,
+	language_id
+FROM film
+--Any value that isn’t formatted correctly will pop up
+--Any value that isn’t formatted correctly can be updated with the UPDATE command
+
+# Null values
+SELECT *
+FROM film
+WHERE film_id IS NULL oR
+	title IS NULL OR
+	release_year IS NULL OR
+	language_id IS NULL OR
+	rating IS NULL;
+--Null values were not present
+--If null values were present, either substitute the null values will an aggregate function or remove entire column if lots of null values were present
