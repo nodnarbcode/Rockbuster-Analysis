@@ -15,3 +15,6 @@ Rockbuster Stealth LLC, renowned for its wide network of rental stores, is trans
 - pgAdmin4: For managing PostgreSQL databases.
 - PostgreSQL: Relational database management system (RDBMS) used to store and query Rockbuster's data.
 - Tableau Public: Platform for creating and sharing interactive data visualizations.
+
+## Link to visualization
+https://public.tableau.com/app/profile/brandon.lu3005/viz/RockbusterVisuals_17211637212500/HIghestRevenue
